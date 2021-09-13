@@ -1,0 +1,106 @@
+1. File -> New Project (указываете название,указываете версию Python.
+2. Создание файла с зависимостями requirements.txt(dependences).
+3. Настраиваете виртуальное окружение File -> Settings -> Project -> #Python Interpreter -> Add...
+4. Установка зависимости при помощи pip install -r путь_до_файла requirements.txt
+5. Создание Django-проекта: django-admin startproject название .
+6. Создание базы данных
+7. Создание приложения: python3 manage.py startapp название
+8. Настройки проекта: настройки БД, зарегистрировать приложения в INSTALLED_APPS
+9. Проверить настройку: python3 manage.py runserver и пройти по выданной 
+
+
+# INSERT
+# Publication.objects.create(title='...', text='...', ...)
+# INSERT INTO publication (title, text) VALUES (..., ...);
+# or
+# pub = Publication(title='...', text='...', ...)
+# pub.save()
+
+# Publication.objects.bulk_create([
+#     Publication(...),
+#     Publication(...),
+#     Publication(...)
+# ])
+
+# SELECT
+# SELECT * FROM publication
+# Publication.objects.all()
+
+# SELECT title FROM publication
+# 1. Publication.objects.only('title')
+# 2. SELECT title, text, status FROM publication;
+# Publication.object.only('title', 'text', 'status')
+# Publication.objects.defer('user', 'created_at', 'updated_at')
+
+# фильтрация
+# SELECT * FROM publication WHERE ...;
+# Publication.objects.filter(условие)
+
+# Операции:
+# SELECT * FROM publication WHERE id = 1;
+# Publication.object.filter(id=1)
+# -> [pub1] - получили список вместо элемента
+# SELECT * FROM publication WHERE id=1 LIMIT1
+# Publication.objects.get(id=1)
+# Publication.objects.filter(id=1).first()/last()
+# SELECT * FROM publication WHERE created_at > '...'
+# import datetime
+# curr = datetime.datetime.strptime('')
+# Publication.objects.filter(created_at__gt=curr)
+# > gt
+# < lt
+# >= gte
+# <= lte
+# = =
+# = exact/iexact
+
+# IN -> in
+# BETWEEN -> range
+# LIKE, ILIKE
+# LIKE/ILIKE 'Samsung%' -> startswith/istartswith
+# LIKE/ILIKE '%11' -> endswith/iendswith
+# LIKE/ILIKE '%something%' -> contains/icontains
+
+# сортировка
+# SELECT * FROM publication ORDER BY created_at ASC;
+# Publication.objects.order_by('created_at')
+# SELECT * FROM publication ORDER BY created_at DESC;
+# Publication.objects.order_by('-created_at')
+# SELECT * FROM publication WHERE ... ORDER BY created_at
+# Publication.objects.filter(...).order_by('created_at')
+# LIMIT
+# SELECT * FROM publication LIMIT 10;
+# Publication.objects.all()[:10]
+# SELECT * FROM publication LIMIT 10 OFFSET 10;
+# Publication.objects.all()[10:20]
+
+# UPDATE
+# обновление всех записей
+# UPDATE publication SET status='closed'
+# Publication.objects.update(status='closed')
+
+# обновление части записей
+# UPDATE publication SET status='closed' WHERE status='draft'
+# Publication.objects.filter(status='draft').update(status='closed')
+
+# обновление одной записи
+# UPDATE publication SET status='closed' WHERE id=1
+# 1. Publication.objects.filter(id=1).update(status='closed')
+# 2. pub = Publication.objects.get(id=1)
+#    pub.status = 'closed'
+#    pub.save()
+
+# DELETE
+# удаление всех записей
+# DELETE FROM publication'
+# Publication.objects.delete()
+
+# удаление части записей
+# DELETE FROM publication WHERE status='closed'
+# Publication.objects.filter(status='closed').delete()
+
+# удаление одной записи
+# DELETE FROM publication WHERE id=1;
+# 1. Publication.objects.filter(id=1).delete()
+# 2. pub = Publication.objects.get(id=1)
+#    pub.delete()
