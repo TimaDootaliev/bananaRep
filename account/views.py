@@ -1,11 +1,14 @@
 # обработчики запросов
 from rest_framework.views import APIView
-# Create your views here.
+
+from .serializers import (RegistrationSerializer)
 
 
 class RegistrationView(APIView):
-    pass
-
+    def post(self, request):
+        serializer = RegistrationSerializer(request.data)
+        if serializer.is_valid():
+            pass
 
 class ActivationView(APIView):
     pass
