@@ -17,6 +17,13 @@ class RegistrationSerializer(serializers.Serializer):
             raise serializers.ValidationError('Адрес уже зарегистрирован')
         return email
 
+    def validate(self, attrs): #attrs - словарь
+        password = attrs.get('password')
+        password2 = attrs.pop('password_confirm')
+        if password != password2:
+            raise serializers.ValidationError('Пароли не совпадают')
+        return attrs
+
 
 
 
