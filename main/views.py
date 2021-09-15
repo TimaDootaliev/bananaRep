@@ -1,5 +1,6 @@
 from django.shortcuts import render
 # from rest_framework.decorators import api_view
+from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveAPIView, \
     CreateAPIView, UpdateAPIView, DestroyAPIView
@@ -74,6 +75,16 @@ class DeletePublicationView(DestroyAPIView):
     serializer_class = CreatePublicationSerializer
 
 
+class PublicationViewSet(viewsets.ModelViewSet):
+    queryset = Publication.objects.all()
+    serializer_class = CreatePublicationSerializer
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return PublicationListSerializer
+        elif self.action == 'retrieve':
+            return PublicationDetailSerializer
+        return CreatePublicationSerializer
 
 
 
