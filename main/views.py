@@ -81,13 +81,14 @@ POST    |     GET        | PUT/PATCH             | DELETE
 class PublicationViewSet(viewsets.ModelViewSet):
     queryset = Publication.objects.all()
     serializer_class = CreatePublicationSerializer
+    permission_classes = [IsAuthorOrIsAdmin, ]
 
-    def get_permissions(self):
-        if self.action == 'create':
-            return [IsAuthenticated()]
-        elif self.action in ['update', 'partial_update', 'destroy']:
-            return [IsAuthorOrIsAdmin()]
-        return []
+    # def get_permissions(self):
+    #     if self.action == 'create':
+    #         return [IsAuthenticated()]
+    #     elif self.action in ['update', 'partial_update', 'destroy']:
+    #         return [IsAuthorOrIsAdmin()]
+    #     return []
 
     def get_serializer_class(self):
         if self.action == 'list':
