@@ -3,11 +3,14 @@ from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 class IsAuthorOrIsAdmin(BasePermission):
     def has_permission(self, request, view):
+        """ Срабатывает при действиях, в которых не нужен конкретный объект (list, create) """
         if request.method in SAFE_METHODS:
             return True
         return bool(request.user and request.user.is_authenticated)
 
     def has_object_permission(self, request, view, obj):
+        """ Срабатывает при действиях, в которын используется один конкретный объект (update, delete, retrieve)
+        Всегда срабатывает после метода has_permission """
         if request.method in SAFE_METHODS:
             return True
         return request.user and \
