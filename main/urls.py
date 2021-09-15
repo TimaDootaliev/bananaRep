@@ -1,6 +1,7 @@
 from django.urls import path
-from main.views import PublicationsListView, PublicationDetailsView, CreatePublicationView, DeletePublicationView, \
-    UpdatePublicationView, PublicationViewSet
+# from main.views import PublicationsListView, PublicationDetailsView, CreatePublicationView, DeletePublicationView, \
+#     UpdatePublicationView, PublicationViewSet
+from main.views import *
 
 # urlpatterns = [
 #     path('publications/', PublicationsListView.as_view(), name='publications-list'),

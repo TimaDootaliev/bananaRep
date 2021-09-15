@@ -46,6 +46,8 @@ INSTALLED_APPS = [
 
     # сторонние приложения
     'rest_framework',
+    'rest_framework.authtoken',
+    
     # из проекта
     'account',
     'main',
@@ -149,4 +151,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'account.User'  # модель пользователя
+AUTH_USER_MODEL = 'account.User'  # регистрация модели пользователя
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# TODO: настроить отправку писем на почту (настроить smtp)
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}
