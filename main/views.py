@@ -9,10 +9,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from main.models import Publication
+from main.models import Publication, Comment
 from main.permissions import IsAuthorOrIsAdmin
-from main.serializers import PublicationListSerializer, PublicationDetailSerializer, CreatePublicationSerializer
-
+from main.serializers import PublicationListSerializer, PublicationDetailSerializer, CreatePublicationSerializer, \
+    CommentSerializer
 
 '''
 CRUD => CREATE | RETRIEVE | UPDATE    | DELETE
@@ -98,7 +98,13 @@ class PublicationViewSet(viewsets.ModelViewSet):
         return CreatePublicationSerializer
 
 
-# TODO: сделать комментарии
+# TODO: сделать комментарии, создавать комментарии может только залогиненный пользователь,
+#  редактировать и удалять только автор
+class CreateCommitView(CreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
 # TODO: пагинация, фильтрация, поиск
 
 

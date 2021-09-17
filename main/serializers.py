@@ -22,9 +22,16 @@ class PublicationDetailSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    publication = serializers.PrimaryKeyRelatedField(write_only=True)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('publication', 'text', 'user', )
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        validated_data['user'] = request.user
 
 
 class CreatePublicationSerializer(serializers.ModelSerializer):

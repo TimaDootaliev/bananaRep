@@ -1,0 +1,27 @@
+AutoField - SERIAL
+BigAutoField - BIGSERIAL
+SmallAutoField - SMALLSERIAL
+
+IntegerField - INTEGER
+BigIntegerField - 
+SmallIntField
+
+PositiveIntegerField
+PositiveBigIntegerField
+PositiveSmallIntegerField
+
+FloatField
+DecimalField
+
+CharField
+TextField
+
+
+FileField(Привязка к файлу)
+ImageField(Привязка к изображению)
+JsonField - json
+TimeField - TIME
+
+ForeignKey - тип поля в БД будет соответствовать с типом РК в связанной таблице, автоматически в БД создается поле с постфиксом _id
+OneToOneField 
+ManyToManyField - сам создает таблицу для связи
