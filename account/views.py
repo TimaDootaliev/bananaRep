@@ -61,6 +61,8 @@ class ForgotPasswordView(APIView):
         return Response(serializer.errors, status=400)
 
 
+
+
 class ForgotPasswordCompleteView(APIView):
     def post(self, request):
         serializer = ForgotPasswordCompleteSerializer(data=request.data)
@@ -74,7 +76,8 @@ class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        serializer = ChangePasswordSerializer(data=request.data)
+        serializer = ChangePasswordSerializer(data=request.data,
+                                              context={'request': request})
         if serializer.is_valid():
             serializer.set_new_pass()
             return Response('Вы успешно сменили пароль')

@@ -105,6 +105,9 @@ class CreateCommitView(CreateAPIView):
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_serializer_context(self):
+        return {'request': self.request}
+
 # TODO: пагинация, фильтрация, поиск
 
 

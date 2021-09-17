@@ -22,7 +22,7 @@ class PublicationDetailSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    publication = serializers.PrimaryKeyRelatedField(write_only=True)
+    publication = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Publication.objects.all())
     user = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
