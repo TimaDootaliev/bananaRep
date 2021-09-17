@@ -26,6 +26,9 @@ urlpatterns = [
                                                                'put': 'update',
                                                                'patch': 'partial_update',
                                                                'delete': 'destroy'}), name='publication-details'),
+    path('comments/', CreateCommentView.as_view(), name='comments'),
+    path('comments/update/<int:pk>', UpdateCommentView.as_view(), name='comments-update'),
+    path('comments/delete/<int:pk>', DeleteCommentView.as_view(), name='comments-delete'),
 ]
 
 

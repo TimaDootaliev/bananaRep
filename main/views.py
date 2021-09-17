@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
 # from rest_framework.decorators import api_view
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
@@ -10,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from main.models import Publication, Comment
-from main.permissions import IsAuthorOrIsAdmin
+from main.permissions import IsAuthorOrIsAdmin, IsAuthor
 from main.serializers import PublicationListSerializer, PublicationDetailSerializer, CreatePublicationSerializer, \
     CommentSerializer
 
@@ -100,13 +101,39 @@ class PublicationViewSet(viewsets.ModelViewSet):
 
 # TODO: сделать комментарии, создавать комментарии может только залогиненный пользователь,
 #  редактировать и удалять только автор
-class CreateCommitView(CreateAPIView):
+class CreateCommentView(CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated]
 
     def get_serializer_context(self):
         return {'request': self.request}
+
+
+class UpdateCommentView(UpdateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthor]
+
+
+class DeleteCommentView(DestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthor]
+
+
+class CommentViewSet(mixins.CreateModelMixin,
+                     mixins.DestroyModelMixin,
+                     mixins.UpdateModelMixin,
+                     GenericViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def get_permissions(self):
+        if self.action == 'create':
+            return [IsAuthenticated()]
+        return [IsAuthor()]
+
 
 # TODO: пагинация, фильтрация, поиск
 
