@@ -36,9 +36,12 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField('Права администратора', default=False)  # admin or not
     activation_code = models.CharField('Код активации', max_length=8, blank=True)
 
+    # привязка менеджера
     objects = UserManager()
 
+    # указывает поле, которое будет использоваться как логин
     USERNAME_FIELD = 'email'
+    # указываются обязательные поля, кроме username и password
     REQUIRED_FIELDS = ['name']
 
     class Meta:
@@ -48,9 +51,11 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
 
+    # какие пользователи могут иметь доступ к админ панели и действиям в ней
     def has_module_perms(self, app_label):
         return self.is_staff
 
+    #
     def has_perm(self, obj=None):
         return self.is_staff
 

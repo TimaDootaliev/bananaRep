@@ -34,7 +34,8 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-# Отвечает за установленные приложения (сначала приложения Джанго, сторонние, из проекта(желательно в алфавитном порядке))
+# Отвечает за установленные приложения
+# (сначала приложения Джанго, сторонние, из проекта(желательно в алфавитном порядке))
 INSTALLED_APPS = [
     # приложения Джанго
     'django.contrib.admin',
@@ -153,7 +154,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'account.User'  # регистрация модели пользователя
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+
 # TODO: настроить отправку писем на почту (настроить smtp)
 
 REST_FRAMEWORK = {

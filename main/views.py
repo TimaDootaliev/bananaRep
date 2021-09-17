@@ -76,8 +76,8 @@ POST    |     GET        | PUT/PATCH             | DELETE
 #     queryset = Publication.objects.all()
 #     serializer_class = CreatePublicationSerializer
 
-# TODO: создавать объявление может только авторизованный пользователь
-# TODO: изменять и удалять может автор либо админ
+# TODO: Объявления создавались со статусом draft, а затем автор мог опубликовать(поменять на open)
+# TODO: Черновик не отображается в общем списке - его может видеть только автор
 class PublicationViewSet(viewsets.ModelViewSet):
     queryset = Publication.objects.all()
     serializer_class = CreatePublicationSerializer
@@ -96,6 +96,10 @@ class PublicationViewSet(viewsets.ModelViewSet):
         elif self.action == 'retrieve':
             return PublicationDetailSerializer
         return CreatePublicationSerializer
+
+
+# TODO: сделать комментарии
+# TODO: пагинация, фильтрация, поиск
 
 
 

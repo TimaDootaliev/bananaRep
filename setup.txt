@@ -104,3 +104,6 @@
 # 1. Publication.objects.filter(id=1).delete()
 # 2. pub = Publication.objects.get(id=1)
 #    pub.delete()
+
+
+чё
