@@ -1,6 +1,8 @@
-from django.urls import path
+from django.urls import path, include
 # from main.views import PublicationsListView, PublicationDetailsView, CreatePublicationView, DeletePublicationView, \
 #     UpdatePublicationView, PublicationViewSet
+from rest_framework.routers import SimpleRouter
+
 from main.views import *
 
 # urlpatterns = [
@@ -20,16 +22,25 @@ from main.views import *
 #          name='update-publication'),
 # ]
 
+router = SimpleRouter()
+router.register('publications', PublicationViewSet, 'publications')
+router.register('comments', CommentViewSet, 'comments')
+
 urlpatterns = [
-    path('publications/', PublicationViewSet.as_view({'get': 'list', 'post': 'create'}), name='publications-list'),
-    path('publications/<int:pk>/', PublicationViewSet.as_view({'get': 'retrieve',
-                                                               'put': 'update',
-                                                               'patch': 'partial_update',
-                                                               'delete': 'destroy'}), name='publication-details'),
-    path('comments/', CreateCommentView.as_view(), name='comments'),
-    path('comments/update/<int:pk>', UpdateCommentView.as_view(), name='comments-update'),
-    path('comments/delete/<int:pk>', DeleteCommentView.as_view(), name='comments-delete'),
+    path('', include(router.urls))
 ]
+
+
+# urlpatterns = [
+#     path('publications/', PublicationViewSet.as_view({'get': 'list', 'post': 'create'}), name='publications-list'),
+#     path('publications/<int:pk>/', PublicationViewSet.as_view({'get': 'retrieve',
+#                                                                'put': 'update',
+#                                                                'patch': 'partial_update',
+#                                                                'delete': 'destroy'}), name='publication-details'),
+#     path('comments/', CreateCommentView.as_view(), name='comments'),
+#     path('comments/update/<int:pk>', UpdateCommentView.as_view(), name='comments-update'),
+#     path('comments/delete/<int:pk>', DeleteCommentView.as_view(), name='comments-delete'),
+# ]
 
 
 
