@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     # сторонние приложения
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_swagger',
     'django_filters',
+
     
     # из проекта
     'account',
